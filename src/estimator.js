@@ -1,5 +1,10 @@
 const covid19ImpactEstimator = (data) => {
-  const { reportedCases, timeToElapse, periodType } = data;
+  const {
+    reportedCases,
+    timeToElapse,
+    periodType,
+    totalHospitalBeds
+  } = data;
   const impact = {};
   const severeImpact = {};
   let factor;
@@ -18,11 +23,19 @@ const covid19ImpactEstimator = (data) => {
       factor = 2 ** Math.trunc(timeToElapse / 3);
   }
 
+  const severeEstimate = (value) => Math.trunc(value * 0.15);
+
+  const bedsEstimate = (severeCases) => Math.trunc((totalHospitalBeds * 0.35) - severeCases);
+
   impact.currentlyInfected = reportedCases * 10;
   impact.infectionsByRequestedTime = impact.currentlyInfected * factor;
+  impact.severeCasesByRequestedTime = severeEstimate(impact.infectionsByRequestedTime);
+  impact.hospitalBedsByRequestedTime = bedsEstimate(impact.severeCasesByRequestedTime);
 
   severeImpact.currentlyInfected = reportedCases * 50;
   severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * factor;
+  severeImpact.severeCasesByRequestedTime = severeEstimate(severeImpact.infectionsByRequestedTime);
+  severeImpact.hospitalBedsByRequestedTime = bedsEstimate(severeImpact.severeCasesByRequestedTime);
 
   return { data, impact, severeImpact };
 };
