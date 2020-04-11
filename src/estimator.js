@@ -33,7 +33,7 @@ const covid19ImpactEstimator = (data) => {
   const bedsEstimate = (severeCases) => Math.trunc((totalHospitalBeds * 0.35) - severeCases);
 
   const dollarsLost = (severeCases) => {
-    const {avgDailyIncomePopulation, avgDailyIncomeInUSD} = region;
+    const { avgDailyIncomePopulation, avgDailyIncomeInUSD } = region;
     const res = (severeCases * avgDailyIncomePopulation * avgDailyIncomeInUSD) / timeToElapse;
     return Math.trunc(res);
   };
