@@ -8,20 +8,20 @@ const covid19ImpactEstimator = (data) => {
   } = data;
   const impact = {};
   const severeImpact = {};
-  let factor;
+  let factor, period;
 
   switch (periodType) {
-    case 'days':
-      factor = 2 ** Math.trunc(timeToElapse / 3);
-      break;
     case 'weeks':
       factor = 2 ** Math.trunc((timeToElapse * 7) / 3);
+      period = timeToElapse * 7;
       break;
     case 'months':
       factor = 2 ** Math.trunc((timeToElapse * 30) / 3);
+      period = timeToElapse * 30;
       break;
     default:
       factor = 2 ** Math.trunc(timeToElapse / 3);
+      period = timeToElapse;
   }
 
   const severeEstimate = (value) => Math.trunc(value * 0.15);
@@ -34,7 +34,7 @@ const covid19ImpactEstimator = (data) => {
 
   const dollarsLost = (severeCases) => {
     const { avgDailyIncomePopulation, avgDailyIncomeInUSD } = region;
-    const res = (severeCases * avgDailyIncomePopulation * avgDailyIncomeInUSD) / timeToElapse;
+    const res = (severeCases * avgDailyIncomePopulation * avgDailyIncomeInUSD) / period;
     return Math.trunc(res);
   };
 
