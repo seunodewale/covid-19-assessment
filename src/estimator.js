@@ -8,7 +8,8 @@ const covid19ImpactEstimator = (data) => {
   } = data;
   const impact = {};
   const severeImpact = {};
-  let factor, period;
+  let factor;
+  let period;
 
   switch (periodType) {
     case 'weeks':
