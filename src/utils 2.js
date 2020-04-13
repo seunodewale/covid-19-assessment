@@ -33,20 +33,4 @@ export default class Util {
       message: this.message
     });
   }
-
-  sendXML(res) {
-    const result = {
-      status: this.type,
-      message: this.message,
-      data: this.data
-    };
-
-    if (this.type === 'success') {
-      return res.send(result.data);
-    }
-    return res.status(this.statusCode).json({
-      status: this.type,
-      message: this.message
-    });
-  }
 }
