@@ -11,7 +11,7 @@ const app = express();
 
 const port = process.env.PORT || 8000;
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/access.log'));
+const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/access.txt'));
 
 app.use(logger(':method\t\t :url\t\t :status\t\t :response-time ms', { stream: accessLogStream }));
 

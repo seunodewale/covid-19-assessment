@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { toXML } from 'jstoxml';
 
 import covid19ImpactEstimator from './estimator';
@@ -31,7 +33,17 @@ class EstimatorService {
       util.setSuccess(201, covidEstimates);
       res.set('Content-Type', 'application/xml');
       return res.send(toXML(covidEstimates));
-    //   return util.sendXML(res);
+    } catch (error) {
+      util.setError(400, error.message);
+      return util.send(res);
+    }
+  }
+
+  static getLogs(req, res) {
+    try {
+      const logs = fs.readFileSync(path.join(__dirname, '../logs/access.txt'), 'utf8');
+      res.set('Content-Type', 'text/plain');
+      return res.send(logs);
     } catch (error) {
       util.setError(400, error.message);
       return util.send(res);
