@@ -41,7 +41,7 @@ class EstimatorService {
 
   static getLogs(req, res) {
     try {
-      const logs = fs.readFileSync(path.join(__dirname, '../logs/log.txt'), 'utf8');
+      const logs = fs.readFileSync(path.join(__dirname, '../logs/logs.txt'), 'utf8');
       res.set('Content-Type', 'text/plain');
       return res.send(logs);
     } catch (error) {

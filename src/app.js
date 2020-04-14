@@ -22,14 +22,14 @@ const custom = (tokens, req, res) => {
   return output;
 };
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/log.txt'));
+const accessLogStream = fs.createWriteStream(path.join(__dirname, '../logs/logs.txt'));
 
 app.use(logger(custom, { stream: accessLogStream }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/v1/on-covid-19', router);
+app.use('/api/v1/on-covid-19/', router);
 
 // when a random route is inputed
 app.get('*', (req, res) => res.status(200).send({
